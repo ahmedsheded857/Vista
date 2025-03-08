@@ -1,0 +1,483 @@
+/* 
+=============================
+المتغيرات الأساسية للتصميم
+=============================
+*/
+:root {
+  --primary: #f4623a;
+  --secondary: #6c757d;
+  --light: #f8f9fa;
+  --dark: #212529;
+  --font-sans-serif: "Merriweather Sans", sans-serif;
+  --font-serif: "Merriweather", serif;
+}
+
+/* 
+=============================
+إعدادات الصفحة العامة
+=============================
+*/
+body {
+  font-family: var(--font-serif);
+  color: var(--dark);
+  background-color: #fff;
+  margin: 0;
+  padding: 0;
+  line-height: 1.6;
+}
+
+/* 
+=============================
+العناوين
+=============================
+*/
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-sans-serif);
+  color: var(--primary);
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+/* 
+=============================
+شريط التنقل الرئيسي
+=============================
+*/
+#mainNav {
+  background-color: #ffffff;
+  box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.15);
+  transition: background-color 0.2s ease;
+  padding: 1rem 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+#mainNav .navbar-brand {
+  font-family: var(--font-sans-serif);
+  font-weight: 700;
+  color: var(--dark);
+  font-size: 1.5rem;
+  text-decoration: none;
+}
+
+#mainNav .nav-link {
+  font-family: var(--font-sans-serif);
+  font-weight: 700;
+  color: var(--secondary);
+  font-size: 0.9rem;
+  padding: 0.75rem 1rem;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+#mainNav .nav-link:hover,
+#mainNav .nav-link.active {
+  color: var(--primary);
+}
+
+/* 
+=============================
+تعديلات الشاشة الكبيرة
+=============================
+*/
+@media (min-width: 992px) {
+  #mainNav {
+      background-color: transparent;
+      box-shadow: none;
+      padding: 1.5rem 0;
+  }
+
+  #mainNav .navbar-brand {
+      color: rgba(255,255,255,0.7);
+      font-size: 1.75rem;
+  }
+
+  #mainNav .nav-link {
+      color: rgba(255,255,255,0.7);
+  }
+
+  #mainNav .navbar-brand:hover,
+  #mainNav .nav-link:hover {
+      color: #fff;
+  }
+
+  #mainNav.navbar-shrink {
+      background-color: #fff;
+      box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.15);
+      padding: 1rem 0;
+  }
+
+  #mainNav.navbar-shrink .navbar-brand {
+      color: var(--dark);
+  }
+
+  #mainNav.navbar-shrink .nav-link {
+      color: var(--dark);
+  }
+
+  #mainNav.navbar-shrink .nav-link:hover {
+      color: var(--primary);
+  }
+}
+
+/* 
+=============================
+خلفية الصفحة الرئيسية (Masthead)
+=============================
+*/
+.masthead {
+  position: relative;
+  background-image: url('./Image/IMG-20250206-WA0027-enhanced.png');
+  background-size: 100% 100%; 
+  background-position: center; 
+  background-repeat: no-repeat; 
+  background-attachment: fixed; 
+  height: 100vh; 
+  display: flex;
+  align-items: center; 
+  justify-content: center;
+  text-align: center;
+  align-items: flex-end; 
+  justify-content: center; 
+  color: #ffffff;
+}
+
+.masthead::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); 
+  z-index: 1; 
+}
+
+.masthead > * {
+  position: relative;
+  z-index: 2;
+}
+
+.masthead h1 {
+  font-size: 3.5rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+}
+
+.masthead p {
+  font-size: 1.25rem;
+  font-weight: 300;
+  margin-bottom: 2rem;
+}
+
+/* جعل النافبار أسود بالكامل بحجم أصغر */
+.navbar {
+  background-color: #000000 !important; 
+  padding: 0.2rem 0 !important; 
+  min-height: 50px !important; 
+}
+
+/* ضبط حجم اللوجو ليكون متناسقًا */
+.navbar-brand .logo {
+  height: 50px !important; 
+  width: auto;
+  object-fit: contain;
+}
+
+/* جعل لون الروابط أبيض بالكامل */
+.navbar-nav .nav-link {
+  color: white !important;
+  font-size: 0.9rem; 
+  font-weight: bold;
+  padding: 0.2rem 0.6rem; 
+  transition: color 0.3s ease;
+}
+
+/* تأثير عند التفاعل مع الروابط */
+.navbar-nav .nav-link:hover,
+.navbar-nav .nav-link.active {
+  color: #f4623a !important; 
+}
+
+/* الحفاظ على الحجم ثابت أثناء التمرير */
+#mainNav.navbar-shrink {
+  padding: 0.2rem 0 !important;
+  min-height: 50px !important; 
+}
+
+#mainNav.navbar-shrink .navbar-brand .logo {
+  height: 50px !important; 
+}
+
+/* 
+=============================
+الأزرار
+=============================
+*/
+.btn {
+  font-family: var(--font-sans-serif);
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.25rem;
+  text-decoration: none;
+}
+
+.btn-primary {
+  background-color: var(--primary);
+  color: #000000;
+  border: 1px solid var(--primary);
+}
+
+.btn-primary:hover {
+  background-color: #d9532e;
+  border-color: #d9532e;
+  color: #000000;
+}
+
+/* إضافة مسافة بين القسمين */
+#services {
+  margin-top: 6rem;
+  padding-top: 2rem; 
+  padding-bottom: 4rem; 
+}
+
+/* إضافة خلفية مختلفة */
+#services {
+  background-color: #ffffff; 
+}
+
+/* 
+=============================
+قسم المحفظة (Portfolio)
+=============================
+*/
+#portfolio {
+  margin-top: 5%; /* إضافة margin-top لإنشاء فرق بين الصفحتين */
+}
+
+/*--------------------------------------
+تخطيط مشاريع المعرض باستخدام Flexbox
+--------------------------------------*/
+.projects-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.project-card {
+  background-color: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+}
+
+.project-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+}
+
+.project-card img {
+  width: 100%;
+  height: 250px;
+  object-fit: fill;
+  display: block;
+}
+
+.project-title {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.7); 
+  color: #ffffff; 
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  padding: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: background 0.3s ease-in-out;
+}
+
+.project-card:hover .project-title {
+  background: rgba(0, 0, 0, 0.9); 
+}
+
+/*--------------------------------------
+تصميم متجاوب باستخدام Media Queries
+--------------------------------------*/
+@media (min-width: 1024px) {
+  .project-card {
+      flex: 0 0 calc(33.33% - 20px);
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .project-card {
+      flex: 0 0 calc(50% - 20px);
+  }
+}
+
+@media (max-width: 767px) {
+  .project-card {
+      flex: 0 0 100%;
+  }
+}
+
+/* ----------------contact------------------ */
+#contact {
+  padding-top: 60px;
+  background: linear-gradient(135deg, #ffffff, #ffffff);
+  box-shadow: 0 0 15px rgba(121, 121, 121, 0.5);
+  transition: box-shadow 0.1s ease-in-out;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.contact-left {
+  flex-basis: 35%;
+  text-align: center;
+}
+
+.contact-right {
+  flex-basis: 60%;
+}
+
+.contact-left p {
+  margin-top: 30px;
+  color: #000000;
+}
+
+.contact-left p i {
+  color: #2e3636;
+  margin-right: 15px;
+  font-size: 25px;
+}
+
+.social-icons {
+  margin-top: 30px;
+}
+
+.social-icons a {
+  text-decoration: none;
+  font-size: 30px;
+  margin-right: 15px;
+  display: inline-block;
+  transition: transform 0.5s, color 0.3s;
+}
+
+/* ألوان أيقونات السوشيال */
+.social-icons a.facebook {
+  color: #245ccd;
+}
+.social-icons a.twitter {
+  color: #000000;
+}
+.social-icons a.instagram {
+  color: #C13584;
+}
+.social-icons a.whatsapp {
+  color: #25D366;
+}
+.social-icons a.tiktok {
+  color: #0a0e0e; 
+}
+
+.social-icons a:hover {
+  transform: translateY(-5px);
+}
+
+/* ---------------- Responsive adjustments ---------------- */
+@media (max-width: 992px) {
+  .row {
+      flex-direction: column;
+      align-items: center;
+  }
+  .contact-left,
+  .contact-right {
+      flex-basis: 100%;
+      text-align: center;
+  }
+  .contact-left {
+      margin-bottom: 30px;
+  }
+}
+
+/* للأجهزة المحمولة (Mobile) */
+@media (max-width: 600px) {
+  #contact {
+      padding: 40px 15px;
+  }
+  .contact-left p {
+      font-size: 16px;
+  }
+  .contact-left p i {
+      font-size: 20px;
+      margin-right: 10px;
+  }
+  .social-icons a {
+      font-size: 26px;
+      margin-right: 10px;
+  }
+  form input,
+  form textarea {
+      padding: 12px;
+      font-size: 16px;
+  }
+  form .btn2 {
+      padding: 12px 50px;
+      font-size: 16px;
+  }
+  .copyright {
+      font-size: 14px;
+      padding: 20px 0;
+  }
+}
+
+/* تصميم حقوق النسخ */
+.copyright {
+  width: 100%;
+  background: linear-gradient(45deg, #1a1a1a, #333333);
+  color: #fff;
+  padding: 20px 0;
+  text-align: center;
+  font-size: 16px;
+  letter-spacing: 1px;
+  border-top: 2px solid #444;
+  box-shadow: 0 -3px 6px rgba(0, 0, 0, 0.2);
+  transition: background 0.3s ease;
+}
+
+.copyright p {
+  margin: 0;
+}
+
+/* تأثير عند التحويم على الخلفية */
+.copyright:hover {
+  background: linear-gradient(45deg, #333333, #1a1a1a);
+}
+
+/* استجابة للأجهزة الصغيرة */
+@media (max-width: 600px) {
+  .copyright {
+      font-size: 14px;
+      padding: 15px 0;
+  }
+}
