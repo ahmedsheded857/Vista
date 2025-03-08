@@ -131,10 +131,10 @@ h1, h2, h3, h4, h5, h6 {
 .masthead {
   position: relative;
   background-image: url('./Image/IMG-20250206-WA0027-enhanced.png');
-  background-size: 100% 100%; 
+  background-size: 100% 100%; /* تغيير من cover إلى 100% 100% */
   background-position: center; 
   background-repeat: no-repeat; 
-  background-attachment: fixed; 
+  background-attachment: scroll; /* تغيير من fixed إلى scroll */
   height: 100vh; 
   display: flex;
   align-items: center; 

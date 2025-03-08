@@ -1,5 +1,3 @@
-
-
 window.addEventListener('DOMContentLoaded', event => {
 
     // Navbar shrink function
@@ -13,7 +11,6 @@ window.addEventListener('DOMContentLoaded', event => {
         } else {
             navbarCollapsible.classList.add('navbar-shrink')
         }
-
     };
 
     // Shrink the navbar 
@@ -49,47 +46,100 @@ window.addEventListener('DOMContentLoaded', event => {
         elements: '#portfolio a.portfolio-box'
     });
 
-});
-// Lazy Loading للصور
-document.addEventListener("DOMContentLoaded", function() {
+    // Lazy Loading للصور مع تأثيرات انتقالية
     const images = document.querySelectorAll("img[data-src]");
-
     const imgOptions = {
-        threshold: 0,
-        rootMargin: "0px 0px 50px 0px"
+        threshold: 0.1,
+        rootMargin: "0px 0px 100px 0px"
     };
-
     const imgObserver = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
             if (!entry.isIntersecting) return;
 
             const img = entry.target;
             img.src = img.dataset.src;
+
+            img.onload = () => {
+                img.style.opacity = 1;
+                img.style.transition = "opacity 0.5s ease";
+            };
+
             img.removeAttribute("data-src");
             observer.unobserve(img);
         });
     }, imgOptions);
 
-    images.forEach(img => imgObserver.observe(img));
-});
+    images.forEach(img => {
+        img.style.opacity = 0;
+        imgObserver.observe(img);
+    });
 
-// Service Worker للتخزين المؤقت
-if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/service-worker.js')
-        .then(registration => {
-            console.log('Service Worker registered with scope:', registration.scope);
-        })
-        .catch(error => {
-            console.error('Service Worker registration failed:', error);
+    // تحميل الخلفية بشكل متأخر مع تأثير انتقالي
+    const backgroundImage = "./Image/IMG-20250206-WA0027-enhanced.png";
+    const masthead = document.querySelector('.masthead');
+
+    if (masthead) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    masthead.style.backgroundImage = `url(${backgroundImage})`;
+                    masthead.style.opacity = 1;
+                    masthead.style.transition = "opacity 0.5s ease";
+                    observer.unobserve(masthead);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        observer.observe(masthead);
+    }
+
+    // Service Worker مع Workbox
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/service-worker.js')
+                .then(registration => {
+                    console.log('Service Worker registered with scope:', registration.scope);
+
+                    if ('workbox' in window) {
+                        const { precaching, routing, strategies } = workbox;
+
+                        precaching.precacheAndRoute([
+                            { url: './Image/IMG-20250206-WA0027-enhanced.png', revision: '1' },
+                        ]);
+
+                        routing.registerRoute(
+                            /\.(?:png|jpg|jpeg|svg|gif)$/,
+                            new strategies.CacheFirst({
+                                cacheName: 'images-cache',
+                                plugins: [
+                                    new workbox.expiration.ExpirationPlugin({
+                                        maxEntries: 50,
+                                        maxAgeSeconds: 30 * 24 * 60 * 60,
+                                    }),
+                                ],
+                            })
+                        );
+                    }
+                })
+                .catch(error => {
+                    console.error('Service Worker registration failed:', error);
+                });
         });
-}
-const backgroundImage = "./Image/IMG-20250206-WA0027-enhanced.png"; 
+    }
 
-        // تعيين الخلفية مباشرة
-        document.body.style.backgroundImage = `url(${backgroundImage})`;
+    // تأجيل تحميل بعض الأجزاء غير الضرورية
+    setTimeout(() => {
+        const scriptsToLoad = [
+            'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js',
+            'https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js',
+            'https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js',
+            'https://unpkg.com/swiper/swiper-bundle.min.js',
+        ];
 
-        // تحميل مسبق للصورة (اختياري لضمان السرعة)
-        const img = new Image();
-        img.src = backgroundImage;
-        img.onload = () => {
-            console.log("تم تحميل الخلفية بنجاح!");
+        scriptsToLoad.forEach(src => {
+            const script = document.createElement('script');
+            script.src = src;
+            document.body.appendChild(script);
+        });
+    }, 1000);
+});
