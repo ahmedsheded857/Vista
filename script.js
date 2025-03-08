@@ -83,3 +83,13 @@ if ('serviceWorker' in navigator) {
             console.error('Service Worker registration failed:', error);
         });
 }
+const backgroundImage = "./Image/IMG-20250206-WA0027-enhanced.png"; 
+
+        // تعيين الخلفية مباشرة
+        document.body.style.backgroundImage = `url(${backgroundImage})`;
+
+        // تحميل مسبق للصورة (اختياري لضمان السرعة)
+        const img = new Image();
+        img.src = backgroundImage;
+        img.onload = () => {
+            console.log("تم تحميل الخلفية بنجاح!");
