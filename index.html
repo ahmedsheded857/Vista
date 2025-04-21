@@ -29,21 +29,138 @@
         <link href="style.css" rel="stylesheet" />
     <!-- أسلوب الموقع (دمج ملف CSS الداخلي بالكامل) -->
     <style>
-     
+      /* أنيميشن الجملة */
+      @keyframes fadeInScale {
+        0% { opacity: 0; transform: scale(0.8); }
+        100% { opacity: 1; transform: scale(1); }
+      }
+      
+      @keyframes textGradient {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+      
+      .loading-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #f8f9fa;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        transition: opacity 0.5s ease-out;
+      }
+      
+      .loading-text {
+        font-family: 'Poppins', sans-serif;
+        font-size: 2.5rem;
+        font-weight: 600;
+        margin-bottom: 2rem;
+        text-align: center;
+        background: linear-gradient(-45deg, #f4623a, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+        background-size: 400% 400%;
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: textGradient 8s ease infinite, fadeInScale 1.5s ease-out;
+      }
+      
+      .loading-subtext {
+        font-family: 'Merriweather', serif;
+        font-size: 1.2rem;
+        color: #6c757d;
+        margin-top: 1rem;
+        opacity: 0;
+        animation: fadeIn 1.5s ease-out 0.5s forwards;
+      }
+      
+      @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+      
+      .loading-logo {
+        width: 80px;
+        height: 80px;
+        margin-bottom: 2rem;
+        opacity: 0;
+        animation: fadeIn 1s ease-out 0.3s forwards;
+      }
+      
+      /* أنيميشن النقاط الثلاثة */
+      .loading-dots {
+        display: inline-block;
+        position: relative;
+        width: 80px;
+        height: 20px;
+      }
+      
+      .loading-dots div {
+        position: absolute;
+        top: 0;
+        width: 13px;
+        height: 13px;
+        border-radius: 50%;
+        background: #f4623a;
+        animation-timing-function: cubic-bezier(0, 1, 1, 0);
+      }
+      
+      .loading-dots div:nth-child(1) {
+        left: 8px;
+        animation: loading-dots1 0.6s infinite;
+      }
+      
+      .loading-dots div:nth-child(2) {
+        left: 8px;
+        animation: loading-dots2 0.6s infinite;
+      }
+      
+      .loading-dots div:nth-child(3) {
+        left: 32px;
+        animation: loading-dots2 0.6s infinite;
+      }
+      
+      .loading-dots div:nth-child(4) {
+        left: 56px;
+        animation: loading-dots3 0.6s infinite;
+      }
+      
+      @keyframes loading-dots1 {
+        0% { transform: scale(0); }
+        100% { transform: scale(1); }
+      }
+      
+      @keyframes loading-dots3 {
+        0% { transform: scale(1); }
+        100% { transform: scale(0); }
+      }
+      
+      @keyframes loading-dots2 {
+        0% { transform: translate(0, 0); }
+        100% { transform: translate(24px, 0); }
+      }
     </style>
   </head>
   <body id="page-top">
-    <!-- مؤشر التحميل -->
-    <div id="loading-spinner" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1000;">
-      <div style="border: 4px solid #f3f3f3; border-top: 4px solid #f4623a; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite;"></div>
+    <!-- شاشة التحميل الجديدة -->
+    <div id="loading-container" class="loading-container">
+      <img src="./Image/vista (1)[1].png" alt="Vista Logo" class="loading-logo">
+      <div class="loading-text">Crafting Beautiful Spaces</div>
+      <div class="loading-subtext">Your dream design is being prepared...</div>
+      <div class="loading-dots">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
     </div>
-    <style>
-      @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-      }
-    </style>
 
+    <!-- باقي الكود كما هو بدون تغيير -->
     <!-- Masthead -->
     <header class="masthead" id="About">
       <div class="container px-4 px-lg-5 h-100">
@@ -81,6 +198,7 @@
       </div>
     </nav>
 
+    <!-- باقي الأقسام كما هي بدون تغيير -->
     <!-- Services Section -->
     <section class="page-section" id="services">
       <div class="container px-4 px-lg-5">
@@ -400,10 +518,15 @@
         });
       });
 
-      // إخفاء مؤشر التحميل بعد تحميل الصفحة بالكامل
+      // إخفاء شاشة التحميل بعد تحميل الصفحة بالكامل
       window.addEventListener('load', () => {
-        const spinner = document.getElementById('loading-spinner');
-        if (spinner) spinner.style.display = 'none';
+        const loadingContainer = document.getElementById('loading-container');
+        if (loadingContainer) {
+          loadingContainer.style.opacity = '0';
+          setTimeout(() => {
+            loadingContainer.style.display = 'none';
+          }, 500); // يتطابق مع مدة الانتقال في CSS
+        }
       });
     </script>
 
